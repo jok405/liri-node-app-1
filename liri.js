@@ -25,6 +25,29 @@ var commandString = process.argv[3];
 
 
 
+// =================================== Log all inputs the user makes ===================================
+
+// Variable to log every input (good or bad) into log.txt
+var addToLog = "";
+
+// Loop through all of process.argv
+for(var i = 2; i < process.argv.length; i++){
+  addToLog += process.argv[i] + " ";
+}
+addToLog = addToLog.substring(0, addToLog.length - 1); // remove the last space
+
+// Append the log to the txt file (with a line break)
+fs.appendFile("log.txt", addToLog + '\n', function(err) {
+  
+  // If an error in logging was experienced, inform the user. Otherwise, proceed.
+  if(err){
+    console.log('Error in user logging: ' + err);
+  }
+
+});
+
+
+
 // =================================== Input Arguments Logic ===================================
 
 // Switch case for the User Command Types
