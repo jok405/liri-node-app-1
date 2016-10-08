@@ -14,6 +14,19 @@ var Twitter = require('twitter'); // https://www.npmjs.com/package/twitter --> T
 // Link in API Keys for Twitter
 var apiKeys = require('./keys.js');
 
+var client = new Twitter({
+  consumer_key: apiKeys.twitterKeys.consumer_key,
+  consumer_secret: apiKeys.twitterKeys.consumer_secret,
+  access_token_key: apiKeys.twitterKeys.access_token_key,
+  access_token_secret: apiKeys.twitterKeys.access_token_secret
+});
+
+var params = {
+    screen_name: 'tommytom828',
+    count: 20
+};
+
+
 
 // Collect the User Command Tyoe
 var commandType = process.argv[2];
@@ -28,7 +41,7 @@ var commandString = process.argv[3];
 // =================================== Log all inputs the user makes ===================================
 
 // Variable to log every input (good or bad) into log.txt
-var addToLog = "";
+var addToLog = "node liri.js ";
 
 // Loop through all of process.argv
 for(var i = 2; i < process.argv.length; i++){
@@ -98,6 +111,21 @@ function callTwitter(){
 
   // Skip a line in console
   console.log('');
+
+  // Create a request to the Twitter API for my specific API keys (linked in from "keys.js" file)
+  //client.get('search/tweets', function(error, tweets, response) {
+  client.get('statuses/user_timeline', params, function(error, tweets, response) {
+    
+    // Check for error
+    if(error) throw error;
+    
+    // If no error, then proceed with looping all tweets (max of 20)
+    for(var i = 0; i < tweets.length; i++){
+      console.log("Tweet " + (i+1) + ": " + '\n' + tweets[i].text);
+      console.log('');
+    }
+    
+  });
 
 
 }
