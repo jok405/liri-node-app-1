@@ -4,6 +4,10 @@
 
 
 
+// My unique Twitter username (please change it to your username for testing)
+var myTwitterUserName = 'tommytom828'
+
+
 // Link in Node Packages
 var fs = require('fs'); // Included with Node.js --> Read/Write files
 var request = require('request'); // https://www.npmjs.com/package/request --> API request client
@@ -22,7 +26,7 @@ var client = new Twitter({
 });
 
 var params = {
-    screen_name: 'tommytom828',
+    screen_name: myTwitterUserName,
     count: 20
 };
 
