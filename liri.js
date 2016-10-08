@@ -5,7 +5,7 @@
 
 
 // My unique Twitter username (please change it to your username for testing)
-var myTwitterUserName = 'tommytom828'
+var myTwitterUserName = 'tommytom828';
 
 
 // Link in Node Packages
