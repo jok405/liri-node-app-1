@@ -65,6 +65,13 @@ fs.appendFile("log.txt", addToLog + '\n', function(err) {
 
 
 
+
+// =================================== Log all outputs LIRI makes ===================================
+
+// 
+
+
+
 // =================================== Input Arguments Logic ===================================
 
 // Switch case for the User Command Types
@@ -100,8 +107,21 @@ switch(commandType){
     // Skip a line in console
     console.log('');
 
-    // Prompt User
-    console.log('Please pass in a valid LIRI command type...' + '\n' + 'Ex: "my-tweets", "spotify-this-song", "movie-this", or "do-what-it-says"');
+    // Prompt Message
+    var userPrompt = 'Please pass in a valid LIRI command type...' + '\n' + 'Ex: "my-tweets", "spotify-this-song", "movie-this", or "do-what-it-says"';
+    
+    // Show message in console
+    console.log(userPrompt);
+
+    // Append to log
+    fs.appendFile("log.txt", userPrompt + '\n\n\n', function(err) {
+      if(err){
+        console.log('Error in output logging: ' + err);
+      }
+    });
+
+
+
 }
 
 
@@ -124,13 +144,26 @@ function callTwitter(){
     if(error) throw error;
     
     // If no error, then proceed with looping all tweets (max of 20)
+    var displayTweets = ""; // Used to store tweets for log.txt
     for(var i = 0; i < tweets.length; i++){
-      console.log("Tweet " + (i+1) + ": " + '\n' + tweets[i].text);
-      console.log('');
-    }
-    
-  });
+      var currentTweet = "Tweet " + (i+1) + ": " + '\n' + tweets[i].text;
 
+      // Display to User (done inside loop because I wanted to add more spaces between the tweets, looks nicer)
+      console.log(currentTweet);
+      console.log('');
+
+      // Push to Log Variable
+      displayTweets += currentTweet + '\n';
+    }
+
+    // Append to log
+    fs.appendFile("log.txt", displayTweets + '\n\n', function(err) {
+      if(err){
+        console.log('Error in output logging: ' + err);
+      }
+    });
+
+  });
 
 }
 
@@ -166,25 +199,45 @@ function callSpotify(userInput){
     // Successful Query
     else{
 
-      // Display Song Name
-      console.log('Track Name: ' + data.tracks.items[0].name);
+      // Create display/log variable
+      var displaySpotify = "";
+
+      // Display text for Song Name
+      var displaySong = 'Track Name: ' + data.tracks.items[0].name;
+      displaySpotify += displaySong + '\n';
 
 
-      // Display Artist(s) - If there is more than 1 artist, then loop through them all
+      // Display text for Artist(s) - If there is more than 1 artist, then loop through them all
       var artists = "";
       for(var i = 0; i < data.tracks.items[0].artists.length; i++){
         artists += data.tracks.items[0].artists[i].name + ", ";
       }
       artists = artists.substring(0,artists.length - 2); // remove the last comma and space
-      console.log('Artist Name(s): ' + artists);
+      var displayArtists = 'Artist Name(s): ' + artists;
+      displaySpotify += displayArtists + '\n';
 
 
-      // Display Album
-      console.log('Album Name: ' + data.tracks.items[0].album.name);
+      // Display text for Album
+      var displayAlbum = 'Album Name: ' + data.tracks.items[0].album.name;
+      displaySpotify += displayAlbum + '\n';
 
 
-      // Display Preview Link from Spotify
-      console.log('Preview Song URL: ' + data.tracks.items[0].preview_url);
+      // Display text for Preview Link from Spotify
+      var displayURL = 'Preview Song URL: ' + data.tracks.items[0].preview_url;
+      displaySpotify += displayURL + '\n';
+
+
+      // Display Spotify Ouput to the user
+      console.log(displaySpotify);
+
+
+      // Append to log
+      fs.appendFile("log.txt", displaySpotify + '\n\n', function(err) {
+        if(err){
+          console.log('Error in output logging: ' + err);
+        }
+      });
+
 
     }
 
@@ -222,38 +275,67 @@ function callMovieRequest(userInput){
     // Successful Query
     if (!error && response.statusCode == 200) {
 
+      // Create a display variable
+      var displayIMDB = "";
+
       // Display Title
-      console.log("Title: " + JSON.parse(body)["Title"]);
+      var displayTitle = "Title: " + JSON.parse(body)["Title"];
+      displayIMDB += displayTitle + '\n';
 
       // Display Year
-      console.log("Year: " + JSON.parse(body)["Year"]);
+      var displayYear = "Year: " + JSON.parse(body)["Year"];
+      displayIMDB += displayYear + '\n';
 
       // Display Age Rating
-      console.log("Rated: " + JSON.parse(body)["Rated"]);
+      var displayAge = "Rated: " + JSON.parse(body)["Rated"];
+      displayIMDB += displayAge + '\n';
 
       // Display IMDB Rating
-      console.log("IMDB Rating: " + JSON.parse(body)["imdbRating"]);
+      var displayRating = "IMDB Rating: " + JSON.parse(body)["imdbRating"];
+      displayIMDB += displayRating + '\n';
 
       // Display Country where produced
-      console.log("Country of Production: " + JSON.parse(body)["Country"]);
+      var displayCountry = "Country of Production: " + JSON.parse(body)["Country"];
+      displayIMDB += displayCountry + '\n';
 
       //Display Language of movie
-      console.log("Language: " + JSON.parse(body)["Language"]);
+      var displayLanguage = "Language: " + JSON.parse(body)["Language"];
+      displayIMDB += displayLanguage + '\n';
 
       // Display Plot of movie
-      console.log("Plot: " + JSON.parse(body)["Plot"]);
+      var displayPlot = "Plot: " + JSON.parse(body)["Plot"];
+      displayIMDB += displayPlot + '\n';
 
       // Display Actors in movie
-      console.log("Actors: " + JSON.parse(body)["Actors"]);
+      var displayActors = "Actors: " + JSON.parse(body)["Actors"];
+      displayIMDB += displayActors + '\n';
 
       // Display Rotten Tomatoes Rating (Critic)
-      console.log("Rotten Tomatoes Rating (Critics): " + JSON.parse(body)["tomatoRating"]);
+      var displayTomatoCritic = "Rotten Tomatoes Rating (Critics): " + JSON.parse(body)["tomatoRating"];
+      displayIMDB += displayTomatoCritic + '\n';
 
       // Display Rotten Tomatoes Rating (Users)
-      console.log("Rotten Tomatoes Rating (Users): " + JSON.parse(body)["tomatoUserRating"]);
+      var displayTomatoUser = "Rotten Tomatoes Rating (Users): " + JSON.parse(body)["tomatoUserRating"];
+      displayIMDB += displayTomatoUser + '\n';
 
       // Display Rotten Tomatoes URL
-      console.log("Rotten Tomatoes URL: " + JSON.parse(body)["tomatoURL"]);
+      var displayTomatoURL = "Rotten Tomatoes URL: " + JSON.parse(body)["tomatoURL"];
+      displayIMDB += displayTomatoURL + '\n';
+
+
+
+      // Display everything to the user
+      console.log(displayIMDB);
+
+
+
+      // Append to log
+      fs.appendFile("log.txt", displayIMDB + '\n\n', function(err) {
+        if(err){
+          console.log('Error in output logging: ' + err);
+        }
+      });
+
 
     }
     // Unsucessful Query
@@ -280,7 +362,16 @@ function callWhatItSays(){
 
     // Display the call to the user
     console.log('');
-    console.log('Running Command: ' + randomCommandType + ' ' + randomCommandString);
+    var randomCall = 'Running Command: ' + randomCommandType + ' ' + randomCommandString;
+    console.log(randomCall);
+
+    // Append to log
+    fs.appendFile("log.txt", randomCall + '\n', function(err) {
+      if(err){
+        console.log('Error in output logging: ' + err);
+      }
+    });
+
 
     // Switch case to determine which function to call
     switch(randomCommandType){
@@ -305,9 +396,21 @@ function callWhatItSays(){
 
       // Case 00 - Unable to parse meaningful command
       default:
+
+      // Create an error message for the user
+      var userPrompt = 'Sorry! Something is wrong with the "random.txt" file.' + '\n' + 'Use your imagination to come up with a LIRI command.';
+      
+      // Show message in console
       console.log('');
-      console.log('Sorry! Something is wrong with the "random.txt" file.' + '\n' + 'Use your imagination to come up with a LIRI command.');
-    
+      console.log(userPrompt);
+
+      // Append to log
+      fs.appendFile("log.txt", userPrompt + '\n\n\n', function(err) {
+        if(err){
+          console.log('Error in output logging: ' + err);
+        }
+      });
+
     }
 
   });
