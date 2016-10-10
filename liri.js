@@ -36,8 +36,13 @@ var params = {
 var commandType = process.argv[2];
 
 
-// Collect the User Command String
-var commandString = process.argv[3];
+// Collect the User Command String (Loop through everything in case the input is not passed in quotes)
+var commandString = "";
+for(var i = 3; i < process.argv.length; i++){
+  commandString += process.argv[i] + " ";
+}
+// Remove the last space
+commandString = commandString.trim();
 
 
 
@@ -178,7 +183,7 @@ function callSpotify(userInput){
 
   // Test if a song name was passed into LIRI
   var songName;
-  if(userInput == undefined){
+  if(userInput == ""){
     // If nothing is specified, search a default song
     songName = "The Sign Ace of Base"; // needed to specify "Ace of Base" here, otherwise I got the Suicide Squad album 
   }
@@ -256,7 +261,7 @@ function callMovieRequest(userInput){
 
   // Test if a move name was passed into LIRI
   var movieName;
-  if(userInput == undefined){
+  if(userInput == ""){
     // If nothing is specified, search a default movie
     movieName = "Mr.+Nobody";
   }
