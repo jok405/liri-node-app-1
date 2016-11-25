@@ -31,7 +31,7 @@ To run the app, simply use the `node liri.js [command-here]` format discussed ab
 
 ### Twitter API
 Running the command `node liri.js my-tweets` will return my 20 most recent tweets.
-![Twitter Command](/screenshots/twitter.png)
+![Twitter Command](/screenshots/twitter.png)  
 ___
 <br />
 Note that I have only tweeted 3 times ever, so that is why only 3 tweets are shown.
@@ -39,7 +39,7 @@ Note that I have only tweeted 3 times ever, so that is why only 3 tweets are sho
 
 ### Spotify API
 Running the command `node liri.js spotify-this-song My Name Is Jonas` will return the track info from Spotify.
-![Spotify Command](/screenshots/spotify.png)
+![Spotify Command](/screenshots/spotify.png)  
 ___
 <br />
 Note that running `node liri.js spotify-this-song "My Name Is Jonas"` will produce the same result.
@@ -47,7 +47,7 @@ Note that running `node liri.js spotify-this-song "My Name Is Jonas"` will produ
 
 ### IMDb API
 Running the command `node liri.js movie-this Pulp Fiction` will return the movie info from IMDb.
-![IMDb Command](/screenshots/imdb.png)
+![IMDb Command](/screenshots/imdb.png)  
 ___
 <br />
 Note that running `node liri.js spotify-this-song "Pulp Fiction"` will produce the same result.
@@ -55,7 +55,7 @@ Note that running `node liri.js spotify-this-song "Pulp Fiction"` will produce t
 
 ### Node `fs` file reader
 Running the command `node liri.js do-what-it-says` will read a command out of the `random.txt` file and perform it.
-![Random Command](/screenshots/random.png)
+![Random Command](/screenshots/random.png)  
 ___
 <br />
 Note that in this case, the `log.txt` file contians the command to Spotify the song "I Want It That Way".
