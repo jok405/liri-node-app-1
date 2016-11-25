@@ -18,7 +18,7 @@ node dependencies mentioned above.
 
 After the node packages, are installed...
   - You will need to set up the Twitter API (if you do not wish to demo the `my-tweets` command, you can skip this part)
-    - You will need to get API keys for Twitter. Please refer to the [Twitter Package Docs](https://www.npmjs.com/package/twitter) to get a `consumer_key`, `consumer_secret`, `access_token_key`, and `access_token_secret`.
+    - You will need to get API keys for Twitter. Please refer to the [Twitter Apps page](https://apps.twitter.com/) to get a `consumer_key`, `consumer_secret`, `access_token_key`, and `access_token_secret`. You can also see the [npm page](https://www.npmjs.com/package/twitter) for more information.
     - After you get the API keys, open the `keys.js` file and paste them into the correpsonding locations in the `exports.twitterKeys` object.
     - Finally, you can open the `liri.js` file and change the `myTwitterUserName` variable to your twitter handle.
   - Note that the Spotify API and IMDb do not need special keys, so you can run the app with minimal setup if you wish to skip over the Twitter API functionality.
